@@ -25,33 +25,35 @@ const buildOptions = (params) => {
     }
     const dataObj = (params) => {
         return {
-        MultDcity0: (params.DCity ? params.DCity : ''), //Departure city, ie: SHA
-        MultAcity0: (params.ACity ? params.ACity : ''), //Arrival city (Domestic or International), ie: KMG
-        MultDDate0: (params.DDate ? params.DDate : today()), //Depature date string, ie: 2017-04-15
-        FlightWay: (params.rt ? 'RT' : 'OW'), //OneWay || Roundtrip, options: OW or ??
-        DSeatClass : 'Y', //Booking Code, FJYW options
-        DSeatSelect:  'Y', //?
-        ChildType:  'ADT' ,//?
-        Quantity:  (params.numPass ? params.numPass : 1), //Number of passengers
-        ChildQty:  0, //Number of child passengers
-        BabyQty:  0, //Number of Baby passengers
-        CurrentSeqNO: 1, //?
-        DCity: (params.DCity ? params.DCity : ''),//Departure city, again? how do I reuse MultDcity0 instead?
-        ACity: (params.ACity ? params.ACity : ''),//Arrival city, also again? 
-        DDatePeriod1: (params.Date ? params.Date : ''),//Departure period, again, maybe can take a range?
-        ADatePeriod1: '',//Same as above
-        filter_ddate: '@',//?
-        filter_adate: '@',//?
-        ptype: 'ADT',//?
-        Transfer_Type: -1,//?
-        PartitionSearchToken: 3,//?
-        NonstopOnly: (params.DCity ? 'Y' : '')//Filter by nonstop, ie. Y/N ?
+            MultDcity0: (params.DCity ? params.DCity : ''), //Departure city, ie: SHA
+            MultAcity0: (params.ACity ? params.ACity : ''), //Arrival city (Domestic or International), ie: KMG
+            MultDDate0: (params.DDate ? params.DDate : today()), //Depature date string, ie: 2017-04-15
+            FlightWay: (params.rt ? 'RT' : 'OW'), //OneWay || Roundtrip, options: OW or ??
+            DSeatClass: 'Y', //Booking Code, FJYW options
+            DSeatSelect: 'Y', //?
+            ChildType: 'ADT', //?
+            Quantity: (params.numPass ? params.numPass : 1), //Number of passengers
+            ChildQty: 0, //Number of child passengers
+            BabyQty: 0, //Number of Baby passengers
+            CurrentSeqNO: 1, //?
+            DCity: (params.DCity ? params.DCity : ''), //Departure city, again? how do I reuse MultDcity0 instead?
+            ACity: (params.ACity ? params.ACity : ''), //Arrival city, also again? 
+            DDatePeriod1: (params.Date ? params.Date : ''), //Departure period, again, maybe can take a range?
+            ADatePeriod1: '', //Same as above
+            filter_ddate: '@', //?
+            filter_adate: '@', //?
+            ptype: 'ADT', //?
+            Transfer_Type: -1, //?
+            PartitionSearchToken: 3, //?
+            NonstopOnly: (params.DCity ? 'Y' : '') //Filter by nonstop, ie. Y/N ?
         }
+    }
+    const today = () => {
+        return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate()
     }
     let query = dataObj(params)
     let queryString = []
-    
-    function today() {dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate()}
+
     for (var prop in query) queryString.push(encodeURIComponent(prop) + '=' + encodeURIComponent(query[prop]))
     console.log(query)
     options.body = queryString.join('&')
@@ -67,40 +69,9 @@ function fetch(params) {
 
 class cflights {
     oneWay(params) {
-        fetch(params).then(results => results)
+        return fetch(params).then(results => results)
     }
     roundTrip(params) {}
-
 }
 
-buildOptions({DCity:'SHA', ACity:'XNN'})
-let test = {
-    DCity:'SHA',
-    ACity:'XNN',
-
-}
-
-
-let dataObj = {
-    MultDcity0: 'SHA',
-    MultAcity0: 'KMG',
-    MultDDate0: '2017-04-15',
-    FlightWay: 'OW',
-    DSeatClass: 'Y',
-    DSeatSelect: 'Y',
-    ChildType: 'ADT',
-    Quantity: 1,
-    ChildQty: 0,
-    BabyQty: 0,
-    CurrentSeqNO: 1,
-    DCity: 'SHA',
-    ACity: 'KMG',
-    DDatePeriod1: '2017-04-15',
-    ADatePeriod1: '',
-    filter_ddate: '@',
-    filter_adate: '@',
-    ptype: 'ADT',
-    Transfer_Type: -1,
-    PartitionSearchToken: 3,
-    NonstopOnly: '',
-}
+module.exports = cflights
