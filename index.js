@@ -44,7 +44,7 @@ const buildOptions = (params) => {
             filter_adate: '@', //?
             ptype: 'ADT', //?
             Transfer_Type: -1, //?
-            PartitionSearchToken: params.sToken ? params.sToken : 1, //? /flights/First always fires the req 3 times, with this iterating up by one each time. /flights/Next (for rw) only ever fires once
+            PartitionSearchToken: params.pToken ? params.pToken : 1, //? /flights/First always fires the req 3 times, with this iterating up by one each time. /flights/Next (for rw) only ever fires once
             NonstopOnly: (params.DCity ? 'Y' : '') //Filter by nonstop, ie. Y/N ?
         }
     }
