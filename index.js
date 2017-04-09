@@ -38,13 +38,13 @@ const buildOptions = (params) => {
             CurrentSeqNO: 1, //?
             DCity: (params.DCity ? params.DCity : ''), //Departure city, again? how do I reuse MultDcity0 instead?
             ACity: (params.ACity ? params.ACity : ''), //Arrival city, also again? 
-            DDatePeriod1: (params.Date ? params.Date : ''), //Departure period, again, maybe can take a range?
+            DDatePeriod1: (params.DDate ? params.DDate : ''), //Departure period, again, maybe can take a range?
             ADatePeriod1: '', //Same as above
             filter_ddate: '@', //?
             filter_adate: '@', //?
             ptype: 'ADT', //?
             Transfer_Type: -1, //?
-            PartitionSearchToken: 3, //?
+            PartitionSearchToken: params.sToken ? params.stoken : 1, //? /flights/First always fires the req 3 times, with this iterating up by one each time. /flights/Next (for rw) only ever fires once
             NonstopOnly: (params.DCity ? 'Y' : '') //Filter by nonstop, ie. Y/N ?
         }
     }
@@ -75,3 +75,5 @@ class cflights {
 }
 
 module.exports = cflights
+
+
