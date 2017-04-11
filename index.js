@@ -44,7 +44,7 @@ const buildOptions = (params) => {
             filter_adate: '@', //?
             ptype: 'ADT', //?
             Transfer_Type: -1, //?
-            PartitionSearchToken: params.pToken ? params.pToken : 1, //? /flights/First always fires the req 3 times, with this iterating up by one each time. /flights/Next (for rw) only ever fires once
+            PartitionSearchToken: (params.pToken ? params.pToken : 1), //? /flights/First always fires the req 3 times, with this iterating up by one each time. /flights/Next (for rw) only ever fires once
             NonstopOnly: (params.DCity ? 'Y' : '') //Filter by nonstop, ie. Y/N ?
         }
     }
@@ -55,7 +55,6 @@ const buildOptions = (params) => {
     let queryString = []
 
     for (var prop in query) queryString.push(encodeURIComponent(prop) + '=' + encodeURIComponent(query[prop]))
-    console.log(query)
     options.body = queryString.join('&')
     return options
 }
@@ -75,5 +74,3 @@ class cflights {
 }
 
 module.exports = cflights
-
-
